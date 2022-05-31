@@ -17,14 +17,14 @@ import {useRouter} from "vue-router";
 export default {
   setup() {
 
-    const {error, signup, isPending } = useSignup();
+    const { error, signup, isPending } = useSignup();
     const displayName = ref('');
     const email = ref('');
     const password = ref('');
     const router = useRouter();
 
     const handleSubmit = async () => {
-      const response = await signup(email.value, password.value, displayName.value);
+      await signup(email.value, password.value, displayName.value);
       if (!error.value) {
         await router.push({name: 'Home'});
       }

@@ -15,10 +15,10 @@ import ListView from "@/components/ListView";
 
 export default {
   name: "UserPlaylists",
-  components: {ListView},
+  components: { ListView },
   setup() {
-    const {user} = getUser();
-    const {documents: playlists} = getCollection(
+    const { user } = getUser();
+    const { documents: playlists } = getCollection(
         'playlists',
         ['userId', '==', user.value.uid]
     );
@@ -27,7 +27,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-
-</style>

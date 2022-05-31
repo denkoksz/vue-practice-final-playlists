@@ -10,7 +10,7 @@
 
 <script>
 import useLogin from "@/composables/useLogin";
-import {ref} from "vue";
+import { ref } from "vue";
 import { useRouter } from "vue-router";
 
 export default {
@@ -22,7 +22,7 @@ export default {
     const router = useRouter();
 
     const handleSubmit = async () => {
-      const response = await login(email.value, password.value);
+      await login(email.value, password.value);
       if (!error.value) {
         await router.push({name: 'UserPlaylists'});
       }

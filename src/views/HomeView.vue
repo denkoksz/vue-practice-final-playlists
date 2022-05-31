@@ -11,12 +11,12 @@ import ListView from "@/components/ListView";
 
 export default {
   name: 'Home',
-  components: {ListView},
+  components: { ListView },
   setup() {
-    const {error, documents} = getCollection('playlists')
+    const { error, documents } = getCollection('playlists')
     console.log(documents);
 
-    return {error, documents}
+    return { error, documents }
   }
 
 }
