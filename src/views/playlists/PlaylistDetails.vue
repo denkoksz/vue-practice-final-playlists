@@ -8,6 +8,7 @@
       <h2>{{ playlist.title }}</h2>
       <p class="username">Created by {{ playlist.userName }}</p>
       <p class="description">{{ playlist.description }}</p>
+      <button v-if="ownerShip" @click="handleDelete">Delete Playlist</button>
     </div>
     <div class="song-list">
       <p>song list here</p>
@@ -17,13 +18,26 @@
 
 <script>
 import getDocument from "@/composables/getDocument";
+import getUser from "@/composables/getUser";
+import { computed } from "vue";
+import useDocument from "@/composables/useDocument";
 
 export default {
   props: ['id'],
   setup(props) {
-    const { error, document: playlist } = getDocument('playlists', props.id)
+    const { error, document: playlist } = getDocument('playlists', props.id);
+    const { user } = getUser();
+    const { deleteDoc } = useDocument('playlists', props.id);
 
-    return { error, playlist }
+    const ownerShip = computed(() => {
+      return playlist.value && user.value && user.value.uid === playlist.value.userId;
+    });
+
+    const handleDelete = async () => {
+      await deleteDoc();
+    }
+
+    return { error, playlist, ownerShip, handleDelete };
   }
 }
 </script>
