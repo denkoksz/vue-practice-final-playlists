@@ -11,7 +11,15 @@
       <button v-if="ownerShip" @click="handleDelete">Delete Playlist</button>
     </div>
     <div class="song-list">
-      <p>song list here</p>
+      <div v-if="!playlist.songs.length">No Songs have been added to this playlist yet</div>
+      <div v-for="song in playlist.songs" :key="song.id" class="single-song">
+        <div class="details">
+          <h3>{{ song.title }}</h3>
+          <p>{{ song.artist }}</p>
+        </div>
+        <button v-if="ownerShip">Delete</button>
+      </div>
+      <AddSong v-if="ownerShip" :playlist="playlist"/>
     </div>
   </div>
 </template>
@@ -23,8 +31,10 @@ import { computed } from "vue";
 import useDocument from "@/composables/useDocument";
 import useStorage from "@/composables/useStorage";
 import {useRouter} from "vue-router";
+import AddSong from "@/components/addSong";
 
 export default {
+  components: { AddSong },
   props: ['id'],
   setup(props) {
     const { error, document: playlist } = getDocument('playlists', props.id);
@@ -86,5 +96,13 @@ export default {
     }
     .description {
       text-align: left;
+    }
+    .single-song {
+      padding: 10px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px dashed var(--secondary);
+      margin-bottom: 20px;
     }
 </style>
