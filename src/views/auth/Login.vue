@@ -11,6 +11,7 @@
 <script>
 import useLogin from "@/composables/useLogin";
 import {ref} from "vue";
+import { useRouter } from "vue-router";
 
 export default {
   setup() {
@@ -18,11 +19,12 @@ export default {
 
     const email = ref('');
     const password = ref('');
+    const router = useRouter();
 
     const handleSubmit = async () => {
       const response = await login(email.value, password.value);
       if (!error.value) {
-        console.log('user logged in');
+        await router.push({name: 'UserPlaylists'});
       }
     };
 
